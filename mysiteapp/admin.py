@@ -1,6 +1,13 @@
 from django.contrib import admin
-from .models import User
-# Register your models here.
+from .models import Recipe, Ingredient
 
 
-admin.site.register(User)
+@admin.register(Recipe)
+class RecipeAdmin(admin.ModelAdmin):
+    list_display = ['title', 'cooking_time', 'author']
+    list_editable = ['cooking_time', 'author']
+    list_filter = ['cooking_time', 'author']
+    search_fields = ['title']
+
+
+admin.site.register(Ingredient)

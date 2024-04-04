@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Список категорий
+{% endblock %}
+
+{% block content %}
+        <h2 class="text-center">Список категорий</h2>
+        <hr>
+        {% if user.is_authenticated %}
+            <h4 style="text-align: center"><a href="{% url 'add_category' %}">Добавить категорию</a></h4>
+        {% endif %}
+        <ul class="list-group list-group-flush">
+            {% for category in categories %}
+                <a href="{% url 'category_detail' category.id %}">
+                    <li class="list-group-item">{{ category|capfirst }}</li>
+                </a>
+            {% endfor %}
+        </ul>
+{% endblock %}

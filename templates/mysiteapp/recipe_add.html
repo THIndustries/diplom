@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Добавление рецепта
+{% endblock %}
+
+{% block content %}
+<h1>Добавить рецепт</h1>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    {{ form.photo }}
+    <div class="form-group mt-2">
+        {{ form.title.label }}
+        {{ form.title }}
+    </div>
+    <div class="form-group mt-2">
+    {{ form.description.label }}
+    {{ form.description }}
+    </div>
+    <div id="ingredient-forms" class="mt-2">
+        <h4>Ингредиенты
+            <button id="add-ingredient" class="btn btn-outline-success"><i class="bi bi-plus-lg"></i></button>
+        </h4>
+        <div class="ingredient-group mt-1">
+            <input type="text" name="ingredient_name" placeholder="Введите ингредиент" required maxlength="80">
+            <label for="id_amount">Количество:</label>
+            <input type="text" name="amount" placeholder="Введите количество" required maxlength="20">
+            <button class="remove-ingredient btn btn-outline-danger"><i class="bi bi-x"></i></button>
+        </div>
+    </div>
+
+    <div class="form-group mt-2">
+        {{ form.cooking_time.label }}
+        {{ form.cooking_time }}
+    </div>
+    <div class="form-group mt-2">
+    {{ form.cooking_steps.label }}
+    {{ form.cooking_steps }}
+    </div>
+
+    <div id="category-forms">
+        <h4 class="mt-2">Категории
+            <button id="add-category" class="btn btn-outline-success"><i class="bi bi-plus-lg"></i></button>
+        </h4>
+        <div class="category-group mt-1 ">
+            <input type="text" name="category_name" required placeholder="Введите категорию" maxlength="80">
+            <button class="remove-category btn btn-outline-danger"><i class="bi bi-x"></i></button>
+        </div>
+    </div>
+
+
+    <!-- Ingredient Form -->
+
+    <input class="btn btn-secondary mt-5" type="submit" value="Submit">
+</form>
+
+
+{% endblock %}
+
+{% block js_add %}
+
+<script src="{% static 'js/create_delete_ingredients_categories.js' %}">
+</script>
+
+
+{% endblock %}
