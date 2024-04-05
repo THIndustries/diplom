@@ -16,7 +16,6 @@ class IngredientForm(forms.ModelForm):
 
         error_messages = {
             'name': {
-                # 'max_length': "Слишком много символов",
                 'unique': "Такой ингредиент уже существует",
                 'required': 'Укажите хотя бы один символ',
             }
@@ -43,7 +42,6 @@ class CategoryForm(forms.ModelForm):
 
         error_messages = {
             'name': {
-                # 'max_length': "Слишком много символов",
                 'unique': "Такая категория уже существует",
                 'required': 'Укажите хотя бы один символ',
             }
