@@ -26,7 +26,6 @@ class Ingredient(models.Model):
 class Recipe(models.Model):
     title = models.CharField(max_length=80)
     description = models.TextField()
-    # лучше это поле вынести в отдельную таблицу, но тогда нужно использовать JS для добавления шагов
     cooking_steps = models.TextField(blank=True, null=False)
     cooking_time = models.TimeField()
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='recipes')
@@ -49,5 +48,4 @@ class Image(models.Model):
 class RecipeIngredient(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name='recipe_ingredients')
     ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
-    # возможно надо было это сделать числом и вынести тип числа в отдельное поле
     amount = models.CharField(max_length=20, blank=True)
