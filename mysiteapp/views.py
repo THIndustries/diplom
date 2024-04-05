@@ -10,7 +10,7 @@ from uuid import uuid4
 from django.contrib.auth.decorators import login_required
 
 
-# РЕЦЕПТЫ
+# рецепты
 class AddRecipeView(LoginRequiredMixin, CreateView):
     form_class = RecipeForm
     template_name = 'mysiteapp/recipe_add.html'
@@ -20,29 +20,26 @@ class AddRecipeView(LoginRequiredMixin, CreateView):
         form.instance.author = self.request.user
         self.object = form.save()
 
-        # Handling images
+        # картинки
         images = self.request.FILES.getlist('photo')
         for image_data in images:
             extension = image_data.name.split('.')[-1]
             filename = f'{uuid4()}.{extension}'
-            # image_data = Image.objects.create(url=image_data)
             fs = FileSystemStorage()
             fs.save(filename, image_data)
             image = Image.objects.create(url=filename)
             self.object.images.add(image)
 
-        # Handling ingredients
+        # ингридиенты
         ingredients_data = self.request.POST.getlist('ingredient_name')
         amounts_data = self.request.POST.getlist('amount')
-        # print(ingredients_data)
-        # print(amounts_data)
+
 
         for i in range(len(ingredients_data)):
             ingredient_name = ingredients_data[i].strip().lower()
             amount = amounts_data[i]
             ingredient, _ = Ingredient.objects.get_or_create(name=ingredient_name)
 
-            # Создание RecipeIngredient
             RecipeIngredient.objects.create(
                 recipe=self.object,
                 ingredient=ingredient,
@@ -72,7 +69,6 @@ class RecipeListView(ListView):
     context_object_name = 'recipes'
 
     def get_queryset(self):
-        # return Recipe.objects.select_related('author').filter(is_deleted=False).order_by('?')[:5]
         return Recipe.objects.select_related('author').filter(is_deleted=False)
 
 
